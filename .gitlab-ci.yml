@@ -37,7 +37,7 @@ build_app:
 rspec:
   stage: test
   script:
-    - rspec spec
+    - bundle exec rspec spec
 
 # deploy
 # staging:
