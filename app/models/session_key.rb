@@ -1,0 +1,2 @@
+class SessionKey < ApplicationRecord
+end
