@@ -18,27 +18,34 @@ cache:
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
-  - ruby -v                                   # Print out ruby version for debugging
   - apt-get update -q && apt-get install nodejs -yqq
   - gem install bundler  --no-ri --no-rdoc    # Bundler is not installed with the image
   - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
 
-# Optional - Delete if not using `rubocop`
-#rubocop:
-#  script:
-#  - rubocop
+stages:
+  - build
+  - test
+  - deploy
 
-#rspec:
-#  script:
-#  - rspec spec
-
-rails:
+build_app:
+  stage: build
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
     - bundle exec rake db:migrate
-#    - bundle exec rake db:seed
-#    - bundle exec rake test
+
+rspec:
+  stage: test
+  script:
+    - rspec spec
+
+# deploy
+# staging:
+#   script:
+#
+# production:
+
+
 
 # This deploy job uses a simple deploy flow to Heroku, other providers, e.g. AWS Elastic Beanstalk
 # are supported too: https://github.com/travis-ci/dpl
