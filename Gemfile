@@ -3,8 +3,14 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
+gem 'rbnacl-libsodium'
+gem 'rbnacl'
+
+gem 'jbuilder', '~> 2.5'
+gem 'json_builder'
+gem 'json_error_serializer'
+gem 'rails_param', :git => 'https://github.com/vadimstroganov/rails_param.git'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

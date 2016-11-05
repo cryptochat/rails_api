@@ -6,15 +6,15 @@ class CreateUsersAndSessionKeys < ActiveRecord::Migration[5.0]
     SQL
 
     create_table :session_keys do |t|
-      t.uuid :uuid, default: 'uuid_generate_v4()'
-      t.string :public_key
-      t.string :private_key
-      t.string :shared_key
+      t.string :uuid, null: false
+      t.binary :public_key
+      t.binary :private_key
+      t.binary :shared_key
       t.timestamps
     end
 
     create_table :users do |t|
-      t.uuid :uuid, default: 'uuid_generate_v4()'
+      t.string :uuid, null: false
       t.string :email, null: false
       t.string :password, null: false
       t.string :username

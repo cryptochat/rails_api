@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/vadimstroganov/rails_param.git
+  revision: 52acb6ced06f92f76ec8d4cce45e3b3b2b3be631
+  specs:
+    rails_param (0.9.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -49,8 +55,16 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
+    jbuilder (2.6.0)
+      activesupport (>= 3.0.0, < 5.1)
+      multi_json (~> 1.2)
+    json (2.0.2)
     json-schema (2.7.0)
       addressable (>= 2.4)
+    json_builder (3.1.7)
+      activesupport (>= 2.0.0)
+      json
+    json_error_serializer (0.3.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -64,6 +78,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
+    multi_json (1.12.1)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -99,6 +114,10 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rbnacl (3.4.0)
+      ffi
+    rbnacl-libsodium (1.0.10)
+      rbnacl (>= 3.0.1)
     rspec-core (3.5.2)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -141,15 +160,21 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  jbuilder (~> 2.5)
   json-schema
+  json_builder
+  json_error_serializer
   listen (~> 3.0.5)
   pg
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  rails_param!
+  rbnacl
+  rbnacl-libsodium
   rspec-rails (~> 3.5)
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

@@ -17,29 +17,29 @@ ActiveRecord::Schema.define(version: 20161101143035) do
   enable_extension "uuid-ossp"
 
   create_table "session_keys", force: :cascade do |t|
-    t.uuid     "uuid",        default: -> { "uuid_generate_v4()" }
-    t.string   "public_key"
-    t.string   "private_key"
-    t.string   "shared_key"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.string   "uuid",        null: false
+    t.binary   "public_key"
+    t.binary   "private_key"
+    t.binary   "shared_key"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.uuid     "uuid",                   default: -> { "uuid_generate_v4()" }
-    t.string   "email",                                                        null: false
-    t.string   "password",                                                     null: false
+    t.string   "uuid",                                  null: false
+    t.string   "email",                                 null: false
+    t.string   "password",                              null: false
     t.string   "username"
-    t.string   "first_name",                                                   null: false
-    t.string   "last_name",                                                    null: false
+    t.string   "first_name",                            null: false
+    t.string   "last_name",                             null: false
     t.string   "shared_key"
     t.string   "hmac_key"
     t.datetime "last_password_update"
     t.datetime "last_shared_key_update"
     t.integer  "failed_attempts_auth",   default: 0
     t.boolean  "is_active",              default: true
-    t.datetime "created_at",                                                   null: false
-    t.datetime "updated_at",                                                   null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["failed_attempts_auth"], name: "index_users_on_failed_attempts_auth", using: :btree
     t.index ["is_active"], name: "index_users_on_is_active", using: :btree
