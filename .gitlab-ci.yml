@@ -44,6 +44,8 @@ stages:
 
 build:
   stage: build
+  variables:
+    DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
     - bundle exec rake db:migrate
 
