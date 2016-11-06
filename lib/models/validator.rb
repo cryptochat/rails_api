@@ -17,8 +17,8 @@ class Validator
   end
 
   def self.pub_key_valid_length?(base64_string)
-    string = Base64.encode64(base64_string)
-    string.length == 32 ? true : false
+    string = Base64.decode64(base64_string)
+    string.bytesize == 32 ? true : false
   end
 
 end
