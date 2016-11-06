@@ -9,6 +9,7 @@ services:
 
 variables:
   POSTGRES_DB: nirs_testdb
+  DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
 
 # Cache gems in between builds
 cache:
@@ -44,14 +45,13 @@ stages:
 
 build:
   stage: build
-  variables:
-    DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
     - bundle exec rake db:migrate
 
 test:
   stage: test
   script:
+    - bundle exec rake db:migrate
     - bundle exec rspec spec
 
 deploy_staging:
