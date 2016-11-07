@@ -37,6 +37,7 @@ before_script:
   - apt-get update -q && apt-get install nodejs -yqq
   - gem install bundler  --no-ri --no-rdoc    # Bundler is not installed with the image
   - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
+  - cp config/secrets.example.yml config/secrets.yml
 
 stages:
   - build
