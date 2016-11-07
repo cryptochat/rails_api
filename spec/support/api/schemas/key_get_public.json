@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": ["uuid", "public_key"],
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "public_key": {
+      "type": "string",
+      "pattern": "^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$"
+    }
+  }
+}

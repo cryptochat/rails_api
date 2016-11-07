@@ -8,7 +8,7 @@ services:
   - postgres:latest
 
 variables:
-  POSTGRES_DB: nirs_testdb
+  POSTGRES_DB: wishbyte_db
   DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
 
 # Cache gems in between builds

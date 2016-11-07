@@ -26,6 +26,10 @@ group :development, :test do
   gem 'json-schema'
 end
 
+group :test do
+  gem 'json_matchers'
+end
+
 group :development do
   gem 'puma', '~> 3.0'
   gem 'listen', '~> 3.0.5'
