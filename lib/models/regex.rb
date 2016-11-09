@@ -9,7 +9,7 @@ class Regex
   end
 
   def self.base64
-    /[A-Za-z0-9+\/]+={0,3}/
+    Regexp.new("^\s*(?:(?:[A-Za-z0-9+/]{4})+\s*)*[A-Za-z0-9+/]*={0,2}\s*$")
   end
 
 end

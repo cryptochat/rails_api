@@ -8,7 +8,7 @@ class KeyExchangerController < ApplicationController
   def send_public
     errors =  {}
     errors[:public_key] = param! :public_key, String, required: true, format: Regex.base64
-    errors[:public_key] ||= 'Invalid format' unless Validator.pub_key_valid_length?(params[:public_key])
+    errors[:public_key] ||= ('Invalid format' unless Validator.pub_key_valid_length?(params[:public_key]))
     errors[:uuid]       = param! :uuid,       String, required: true, format: Regex.uuid
     errors.compact!
 
