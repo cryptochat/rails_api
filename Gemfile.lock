@@ -67,6 +67,7 @@ GEM
       capistrano (~> 3.0)
       sshkit (~> 1.2)
     concurrent-ruby (1.0.2)
+    database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     factory_girl (4.7.0)
@@ -195,6 +196,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.2)
   capistrano-rails (~> 1.2)
   capistrano-rvm
+  database_cleaner
   factory_girl_rails
   jbuilder (~> 2.5)
   json-schema

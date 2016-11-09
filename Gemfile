@@ -29,6 +29,7 @@ end
 
 group :test do
   gem 'json_matchers'
+  gem 'database_cleaner'
 end
 
 group :development do
