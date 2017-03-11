@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["errors"],
+  "properties": {
+    "errors": {
+      "type": "object",
+      "identifier": {
+        "type": "string"
+      }
+    }
+  }
+}

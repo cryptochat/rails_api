@@ -1,8 +1,8 @@
 {
   "type": "object",
-  "required": ["uuid", "public_key"],
+  "required": ["identifier", "public_key"],
   "properties": {
-    "uuid": {
+    "identifier": {
       "type": "string",
       "format": "uuid"
     },

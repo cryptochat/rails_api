@@ -32,5 +32,4 @@ class SessionKey < ApplicationRecord
     self.private_key = SecureRandom.random_bytes(32)
     self.public_key  = RbNaCl::GroupElement.base.mult(private_key)
   end
-
 end

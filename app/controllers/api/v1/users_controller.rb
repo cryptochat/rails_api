@@ -1,5 +1,4 @@
 class Api::V1::UsersController < ApiController
-
   def create
     @user = User.new(user_params)
     @user.tokens.build
@@ -25,7 +24,7 @@ class Api::V1::UsersController < ApiController
     login = user_params[:email].present? ? user_params[:email] : user_params[:username]
     @user = User.auth(login, user_params[:password])
 
-    return respond_with 404, message: 'User with the given username and password was not found' unless @user.present?
+    return respond_with 404, key: 'user', message: 'User with the given username and password was not found' unless @user.present?
 
     json = {}
     json[:status] = 'OK'
@@ -38,5 +37,4 @@ class Api::V1::UsersController < ApiController
   def user_params
     $params.permit(:email, :password, :first_name, :last_name, :username)
   end
-
 end

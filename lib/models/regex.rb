@@ -9,7 +9,7 @@ class Regex
   end
 
   def self.base64
-    Regexp.new("^\s*(?:(?:[A-Za-z0-9+/]{4})+\s*)*[A-Za-z0-9+/]*={0,2}\s*$")
+    %r{(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)}
   end
 
 end
