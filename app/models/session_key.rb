@@ -3,11 +3,11 @@ class SessionKey < ApplicationRecord
   require 'base64'
   require 'rbnacl'
 
-  before_create :generate_uuid
+  before_create :generate_identifier
   before_create :generate_keys
 
-  def self.exchange(uuid, base64_public_key)
-    session_key = SessionKey.find_by(uuid: uuid)
+  def self.exchange(identifier, base64_public_key)
+    session_key = SessionKey.find_by(identifier: identifier)
     if session_key.present?
       public_key = Base64.decode64(base64_public_key)
       session_key.shared_key = RbNaCl::GroupElement.new(public_key).mult(session_key.private_key)
@@ -21,16 +21,16 @@ class SessionKey < ApplicationRecord
 
   private
 
-    def generate_uuid
-      self.uuid = loop do
-        random_uuid = SecureRandom.uuid
-        break random_uuid unless self.class.exists?(uuid: random_uuid)
-      end
+  def generate_identifier
+    self.identifier = loop do
+      random_uuid = SecureRandom.uuid
+      break random_uuid unless self.class.exists?(identifier: random_uuid)
     end
+  end
 
-    def generate_keys
-      self.private_key = SecureRandom.random_bytes(32)
-      self.public_key  = RbNaCl::GroupElement.base.mult(private_key)
-    end
+  def generate_keys
+    self.private_key = SecureRandom.random_bytes(32)
+    self.public_key  = RbNaCl::GroupElement.base.mult(private_key)
+  end
 
 end

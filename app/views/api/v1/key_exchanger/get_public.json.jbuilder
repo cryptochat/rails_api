@@ -1,2 +1,2 @@
-json.uuid session_key.uuid
+json.session_id session_key.identifier
 json.public_key session_key.base64_public_key

@@ -1,7 +1,7 @@
 class Regex
 
   def self.email
-    /\A([^@\s]+)@((?:[-a-z0-9]+\.)`[a-z]{2,})\z/i
+    /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   end
 
   def self.uuid

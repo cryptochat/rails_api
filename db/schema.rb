@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101143035) do
+ActiveRecord::Schema.define(version: 20170224123316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "session_keys", force: :cascade do |t|
-    t.string   "uuid",        null: false
+    t.string   "identifier",  null: false
     t.binary   "public_key"
     t.binary   "private_key"
     t.binary   "shared_key"
@@ -25,10 +25,17 @@ ActiveRecord::Schema.define(version: 20161101143035) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tokens_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "uuid",                                  null: false
     t.string   "email",                                 null: false
-    t.string   "password",                              null: false
     t.string   "username"
     t.string   "first_name",                            null: false
     t.string   "last_name",                             null: false
@@ -40,6 +47,7 @@ ActiveRecord::Schema.define(version: 20161101143035) do
     t.boolean  "is_active",              default: true
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.binary   "password"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["failed_attempts_auth"], name: "index_users_on_failed_attempts_auth", using: :btree
     t.index ["is_active"], name: "index_users_on_is_active", using: :btree

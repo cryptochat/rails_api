@@ -7,14 +7,13 @@ gem 'rbnacl-libsodium'
 gem 'rbnacl'
 
 gem 'jbuilder', '~> 2.5'
-gem 'json_builder'
-gem 'json_error_serializer'
 gem 'rails_param', :git => 'https://github.com/vadimstroganov/rails_param.git'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'aescrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -38,7 +37,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
 
+group :development, :gitlab_ci do
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-rvm'
