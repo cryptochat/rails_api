@@ -1,0 +1,37 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Exclude:
+    - "**/*.rake"
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*.rake"
+
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+    - lib/**/*.rake
+  Exclude:
+    - db/**/*
+    - bin/**/*
+    - config/**/*
+    - app/models/ckeditor/**/*
+    - app/uploaders/**/*
