@@ -213,7 +213,7 @@ DEPENDENCIES
   json_matchers
   listen (~> 3.0.5)
   pg
-  puma
+  puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   rails_param!
   rbnacl

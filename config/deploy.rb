@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.8.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@gitlab.it-machine.ru:nirs/api.git'
+set :application, 'wishbyte.org'
+set :repo_url, 'git@github.com:vadimstroganov/crypto_messenger.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
