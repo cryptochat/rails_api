@@ -8,8 +8,8 @@ module Api::V1
 
     def send_public
       errors = {}
-      errors[:public_key] = param! :public_key, String, required: true, format: Regex.base64
-      errors[:identifier] = param! :identifier, String, required: true, format: Regex.uuid
+      errors[:public_key] = param! :public_key, String, required: true, format: ::Regex.base64
+      errors[:identifier] = param! :identifier, String, required: true, format: ::Regex.uuid
       errors.compact!
 
       return render json: { status: '400', errors: errors }, status: :bad_request if errors.present?
