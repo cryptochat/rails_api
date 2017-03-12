@@ -15,11 +15,11 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{deploy@185.41.162.147}
-role :web, %w{deploy@185.41.162.147}
-role :db,  %w{deploy@185.41.162.147}
+role :app, %w(deploy@185.41.162.147)
+role :web, %w(deploy@185.41.162.147)
+role :db,  %w(deploy@185.41.162.147)
 
-server '185.41.162.147', user: 'deploy', roles: %w{web app}
+server '185.41.162.147', user: 'deploy', roles: %w(web app)
 
 set :branch, 'master'
 set :deploy_to, '/home/deploy/wishbyte.org'
