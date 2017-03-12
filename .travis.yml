@@ -8,6 +8,12 @@ before_install:
   - sudo apt-get update -q
   - sudo apt-get install -y libsodium-dev
 
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.5"
+
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
@@ -18,9 +24,3 @@ script:
   - bundle exec rake spec
 
 cache: bundler
-
-services:
-  - postgresql
-
-addons:
-  postgresql: "9.6"
