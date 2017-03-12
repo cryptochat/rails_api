@@ -1,5 +1,5 @@
 class ApiController < ActionController::API
-  include ::JsonErrorSerializer::Extenders::Controller
+  # include JsonErrorSerializer::Extenders::Controller
   include Decryptor
   include Authenticator
 
