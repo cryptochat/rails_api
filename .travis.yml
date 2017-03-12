@@ -8,6 +8,10 @@ before_install:
   - sudo apt-get update -q
   - sudo apt-get install -y libsodium-dev
 
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+
 script:
   - bundle exec rake db:setup
   - bundle exec rake db:migrate
