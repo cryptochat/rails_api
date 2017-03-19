@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   def self.auth(login, password)
     sha512 = OpenSSL::Digest::SHA512.new
-    password = sha512.digest(password.to_s)
+    password = sha512.digest(password.to_s + ENV['SALT'])
     user = where('username = :login or email = :login', login: login).where(password: password).limit(1).first
     Token.generate_token(user).value if user.present?
     user
@@ -34,6 +34,6 @@ class User < ApplicationRecord
 
   def encrypt_password
     sha512 = OpenSSL::Digest::SHA512.new
-    self.password = sha512.digest(password.to_s)
+    self.password = sha512.digest(password.to_s + ENV['SALT'])
   end
 end

@@ -15,6 +15,9 @@ gem 'rails_param', :git => 'https://github.com/vadimstroganov/rails_param.git'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'aescrypt'
 
+gem 'pghero'
+gem 'pg_query'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

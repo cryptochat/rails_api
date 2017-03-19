@@ -21,6 +21,7 @@ pickle-email-*.html
 
 config/secrets.yml
 config/database.yml
+config/environment_variables.yml
 .ruby-version
 
 ## Environment normalization:
