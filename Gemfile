@@ -10,7 +10,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'rails_param', :git => 'https://github.com/vadimstroganov/rails_param.git'
 
+gem 'coffee-rails', '~> 4.2'
 gem 'sass-rails', '~> 5.0'
+gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 
 # Use Redis adapter to run Action Cable in production
