@@ -3,6 +3,9 @@ rvm:
 - 2.3.0
 - 2.4.0
 
+env:
+  - SALT=211234edca00fd0ecf02964e05d3db3a
+
 before_install:
   - sudo add-apt-repository -y ppa:chris-lea/libsodium
   - sudo apt-get update -q
