@@ -1,0 +1,2 @@
+module JsonErrorSerializer
+end

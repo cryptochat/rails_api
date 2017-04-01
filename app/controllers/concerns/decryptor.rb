@@ -24,6 +24,8 @@ module Decryptor
       rescue
         return respond_with 415, key: 'decryptor', message: 'Can\'t decrypt the message'
       end
+    else
+      return respond_with 406, key: 'data', message: 'json invalid' unless valid_json?(data)
     end
 
     hash = params.except(:data)
@@ -38,5 +40,4 @@ module Decryptor
 
     $encryption_enable ? Grasshopper.encrypt($session_key.shared_key, data) : data
   end
-
 end

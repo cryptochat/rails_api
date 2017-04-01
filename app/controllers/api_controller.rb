@@ -1,6 +1,7 @@
-class ApiController < ActionController::API
-  # include JsonErrorSerializer::Extenders::Controller
+class ApiController < ApplicationController
+  include JsonErrorSerializer::Extenders::Controller
   include Decryptor
+  include Checker
   include Authenticator
 
   before_action :set_default_response_format

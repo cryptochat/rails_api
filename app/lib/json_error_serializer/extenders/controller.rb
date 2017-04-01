@@ -10,16 +10,6 @@ module JsonErrorSerializer
         err_name = Rack::Utils::HTTP_STATUS_CODES[err_code].downcase.gsub(' ', '_').to_sym
         render json: JsonErrorSerializer::Extenders::Serialize.error(err_code, key, message), status: err_name
       end
-
-      def valid_json?(json)
-        begin
-          JSON.parse(json)
-          return true
-        rescue JSON::ParserError => e
-          return false
-        end
-      end
-
     end
   end
 end

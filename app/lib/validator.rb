@@ -1,5 +1,4 @@
 class Validator
-
   def self.is_uuid?(string)
     if string =~ Regex.uuid
       true
@@ -20,5 +19,4 @@ class Validator
     string = Base64.decode64(base64_string)
     string.bytesize == 32 ? true : false
   end
-
 end

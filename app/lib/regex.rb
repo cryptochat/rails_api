@@ -1,5 +1,4 @@
 class Regex
-
   def self.email
     /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   end
@@ -11,5 +10,4 @@ class Regex
   def self.base64
     %r{(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)}
   end
-
 end
