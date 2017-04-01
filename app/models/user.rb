@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :last_name,  presence: true, length: { minimum: 2 }
 
   has_many :tokens
+  has_and_belongs_to_many :chat_channels
 
   before_create :generate_uuid
   before_save :encrypt_password, if: :password_changed?

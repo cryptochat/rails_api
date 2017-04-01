@@ -10,11 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224123316) do
+ActiveRecord::Schema.define(version: 20170401103038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+  enable_extension "pg_stat_statements"
+
+  create_table "chat_attachment_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_chat_attachment_types_on_name", unique: true, using: :btree
+  end
+
+  create_table "chat_attachments", force: :cascade do |t|
+    t.integer  "chat_message_id",         null: false
+    t.integer  "chat_attachment_type_id", null: false
+    t.string   "value"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["chat_attachment_type_id"], name: "index_chat_attachments_on_chat_attachment_type_id", using: :btree
+    t.index ["chat_message_id"], name: "index_chat_attachments_on_chat_message_id", using: :btree
+  end
+
+  create_table "chat_channels", force: :cascade do |t|
+    t.string  "name",         null: false
+    t.integer "chat_type_id"
+    t.index ["chat_type_id"], name: "index_chat_channels_on_chat_type_id", using: :btree
+    t.index ["name"], name: "index_chat_channels_on_name", unique: true, using: :btree
+  end
+
+  create_table "chat_channels_users", force: :cascade do |t|
+    t.integer "chat_channel_id"
+    t.integer "user_id"
+    t.index ["chat_channel_id"], name: "index_chat_channels_users_on_chat_channel_id", using: :btree
+    t.index ["user_id"], name: "index_chat_channels_users_on_user_id", using: :btree
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer  "chat_channel_id"
+    t.integer  "user_id"
+    t.text     "text",                            null: false
+    t.boolean  "has_attachments", default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["chat_channel_id"], name: "index_chat_messages_on_chat_channel_id", using: :btree
+    t.index ["user_id"], name: "index_chat_messages_on_user_id", using: :btree
+  end
+
+  create_table "chat_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_chat_types_on_name", unique: true, using: :btree
+  end
 
   create_table "session_keys", force: :cascade do |t|
     t.string   "identifier",  null: false
@@ -57,4 +103,11 @@ ActiveRecord::Schema.define(version: 20170224123316) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true, using: :btree
   end
 
+  add_foreign_key "chat_attachments", "chat_attachment_types"
+  add_foreign_key "chat_attachments", "chat_messages"
+  add_foreign_key "chat_channels", "chat_types"
+  add_foreign_key "chat_channels_users", "chat_channels"
+  add_foreign_key "chat_channels_users", "users"
+  add_foreign_key "chat_messages", "chat_channels"
+  add_foreign_key "chat_messages", "users"
 end
