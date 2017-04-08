@@ -2,14 +2,7 @@ module Decryptor
   include ActiveSupport::Concern
 
   def find_session_key
-    if params[:identifier].present?
-      session_key = SessionKey.find_by(identifier: params[:identifier])
-      return respond_with 404, key: 'identifier', message: 'Not found' unless session_key
-      return respond_with 404, key: 'identifier', message: 'Not have shared key' unless session_key.shared_key.present?
-      session_key
-    else
-      respond_with 400, key: 'identifier', message: 'Not present'
-    end
+    SessionKey.find_by(identifier: params[:identifier])
   end
 
   def decrypt_params

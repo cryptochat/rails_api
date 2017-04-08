@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405193444) do
+ActiveRecord::Schema.define(version: 20170408204152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-  enable_extension "pg_stat_statements"
 
   create_table "chat_attachment_types", force: :cascade do |t|
     t.string "name", null: false
@@ -33,10 +32,12 @@ ActiveRecord::Schema.define(version: 20170405193444) do
   end
 
   create_table "chat_channels", force: :cascade do |t|
-    t.string  "name",         null: false
+    t.string  "name",                      null: false
     t.integer "chat_type_id"
+    t.integer "user_ids",     default: [],              array: true
     t.index ["chat_type_id"], name: "index_chat_channels_on_chat_type_id", using: :btree
     t.index ["name"], name: "index_chat_channels_on_name", unique: true, using: :btree
+    t.index ["user_ids"], name: "index_chat_channels_on_user_ids", using: :gin
   end
 
   create_table "chat_channels_users", force: :cascade do |t|

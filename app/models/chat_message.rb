@@ -5,4 +5,8 @@ class ChatMessage < ApplicationRecord
 
   belongs_to :chat_channel
   belongs_to :user
+
+  def self.send_message(sender_id, recipient_id, message)
+
+  end
 end
