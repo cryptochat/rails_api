@@ -6,7 +6,24 @@ class ChatMessage < ApplicationRecord
   belongs_to :chat_channel
   belongs_to :user
 
-  def self.send_message(sender_id, recipient_id, message)
+  after_create :broadcast_message
 
+  def self.send_message(sender_id, recipient_id, message)
+    chat_channel = ChatChannel.find_or_create(sender_id, recipient_id)
+    create(user_id: sender_id, text: message, chat_channel_id: chat_channel.id)
+  end
+
+  def self.read_all!(user_id)
+    where(is_read: false, user_id: user_id).update_all(is_read: true, readed_at: Time.now.utc)
+  end
+
+  def read?
+    is_read
+  end
+
+  private
+
+  def broadcast_message
+    # code
   end
 end
