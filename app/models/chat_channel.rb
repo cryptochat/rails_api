@@ -1,18 +1,16 @@
 class ChatChannel < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
-  belongs_to :chat_type
   has_and_belongs_to_many :users
 
-  def self.find_or_create(user_1_id, user_2_id, chat_type_name = 'direct')
+  def self.find_or_create(user_1_id, user_2_id)
     ids = [user_1_id, user_2_id].sort
 
     @chat_channel = read_data_from_cache(direct_channel_name(ids))
     @chat_channel ||= find_and_write_cache(ids)
 
     return @chat_channel if @chat_channel.present?
-    channel_type = ChatType.find_by(name: chat_type_name)
-    create(name: direct_channel_name(ids), chat_type_id: channel_type.id, user_ids: ids, cache_user_ids: ids)
+    create(name: direct_channel_name(ids), user_ids: ids, cache_user_ids: ids)
   end
 
   def self.read_data_from_cache(key)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409082827) do
+ActiveRecord::Schema.define(version: 20170409104840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,10 +33,8 @@ ActiveRecord::Schema.define(version: 20170409082827) do
 
   create_table "chat_channels", force: :cascade do |t|
     t.string  "name",                        null: false
-    t.integer "chat_type_id"
     t.integer "cache_user_ids", default: [],              array: true
     t.index ["cache_user_ids"], name: "index_chat_channels_on_cache_user_ids", using: :gin
-    t.index ["chat_type_id"], name: "index_chat_channels_on_chat_type_id", using: :btree
     t.index ["name"], name: "index_chat_channels_on_name", unique: true, using: :btree
   end
 
@@ -58,11 +56,6 @@ ActiveRecord::Schema.define(version: 20170409082827) do
     t.datetime "readed_at"
     t.index ["chat_channel_id"], name: "index_chat_messages_on_chat_channel_id", using: :btree
     t.index ["user_id"], name: "index_chat_messages_on_user_id", using: :btree
-  end
-
-  create_table "chat_types", force: :cascade do |t|
-    t.string "name", null: false
-    t.index ["name"], name: "index_chat_types_on_name", unique: true, using: :btree
   end
 
   create_table "session_keys", force: :cascade do |t|
@@ -108,7 +101,6 @@ ActiveRecord::Schema.define(version: 20170409082827) do
 
   add_foreign_key "chat_attachments", "chat_attachment_types"
   add_foreign_key "chat_attachments", "chat_messages"
-  add_foreign_key "chat_channels", "chat_types"
   add_foreign_key "chat_channels_users", "chat_channels"
   add_foreign_key "chat_channels_users", "users"
   add_foreign_key "chat_messages", "chat_channels"
