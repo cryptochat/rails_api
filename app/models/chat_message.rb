@@ -13,6 +13,11 @@ class ChatMessage < ApplicationRecord
     create(user_id: sender_id, text: message, chat_channel_id: chat_channel.id)
   end
 
+  def self.history(current_user_id, interlocutor_id, offset = 0, limit = 20)
+    chat_channel = ChatChannel.find_or_create(current_user_id, interlocutor_id)
+    where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
+  end
+
   def self.read_all!(user_id)
     where(is_read: false, user_id: user_id).update_all(is_read: true, readed_at: Time.now.utc)
   end
