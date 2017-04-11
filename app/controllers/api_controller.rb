@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   include Authenticator
 
   before_action :set_default_response_format
-  before_action :per_request, except: [:get_public, :send_public]
+  before_action :per_request, except: %i[get_public send_public]
 
   protected
 

@@ -24,6 +24,14 @@ class User < ApplicationRecord
     tokens.order(updated_at: :desc).first.value
   end
 
+  def chat_list
+    ChatMessage.interlocutors(id)
+  end
+
+  def chat_history(interlocutor_id, offset = 0, limit = 20)
+    ChatMessage.history(id, interlocutor_id, offset, limit)
+  end
+
   private
 
   def generate_uuid
