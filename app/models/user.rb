@@ -11,6 +11,16 @@ class User < ApplicationRecord
 
   before_create :generate_uuid
   before_save :encrypt_password, if: :password_changed?
+  before_save :set_full_name
+
+  def self.paginate(offset = 0, limit = 20)
+    select(:id, :full_name).order(:full_name).offset(offset).limit(limit)
+  end
+
+  def self.search(query)
+    query = "%#{query.downcase}%"
+    select(:id, :full_name).where('full_name ILIKE ?', query)
+  end
 
   def self.auth(login, password)
     sha512 = OpenSSL::Digest::SHA512.new
@@ -44,5 +54,9 @@ class User < ApplicationRecord
   def encrypt_password
     sha512 = OpenSSL::Digest::SHA512.new
     self.password = sha512.digest(password.to_s + ENV['SALT'])
+  end
+
+  def set_full_name
+    self.full_name = "#{first_name} #{last_name}"
   end
 end
