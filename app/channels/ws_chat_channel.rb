@@ -7,7 +7,7 @@ class WsChatChannel < ApplicationCable::Channel
   #
   # { "command": "message",
   #   "identifier": "{\"channel\":\"WsChatChannel\"}",
-  #   "data": "{\"cipher_message\":{\"data\":{\"recipient_id\":2,\"message_type\":\"text\",\"message\":\"Your message to recipient\"},\"action\":\"send_message\"}}"
+  #   "data": "{\"cipher_message\":{\"data\":{\"recipient_id\":2,\"message\":\"Your message to recipient\"},\"action\":\"send_message\"}}"
   # }
   def send_message(data)
     data = OpenStruct.new(data['data'])
