@@ -1,13 +1,20 @@
 # config valid only for current version of Capistrano
 lock '3.8.0'
 
+require 'capistrano-db-tasks'
+
 set :application, 'wishbyte.org'
 set :repo_url, 'git@github.com:cryptochat/rails_api.git'
 
+# if you want to remove the local dump file after loading
+set :db_local_clean, true
+# if you want to remove the dump file from the server after downloading
+set :db_remote_clean, true
+set :assets_dir, 'public/uploads'
+set :local_assets_dir, 'public'
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-
-set :deploy_to, '/var/www/my_app_name'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh

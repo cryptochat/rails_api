@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   mount PgHero::Engine, at: :pghero
+  mount ActionCable.server => '/cable'
 
   namespace :api do
     namespace :v1 do

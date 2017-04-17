@@ -25,7 +25,7 @@ class User < ApplicationRecord
   def self.auth(login, password)
     sha512 = OpenSSL::Digest::SHA512.new
     password = sha512.digest(password.to_s + ENV['SALT'])
-    user = where('username = :login or email = :login', login: login).where(password: password).limit(1).first
+    user = where('username = :login or email = :login', login: login).where(password: password).take
     Token.generate_token(user).value if user.present?
     user
   end
@@ -40,6 +40,18 @@ class User < ApplicationRecord
 
   def chat_history(interlocutor_id, offset = 0, limit = 20)
     ChatMessage.history(id, interlocutor_id, offset, limit)
+  end
+
+  def appear
+    update_column(:is_online, true)
+  end
+
+  def disappear
+    update_column(:is_online, false)
+  end
+
+  def online?
+    is_online
   end
 
   private

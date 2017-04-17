@@ -30,16 +30,13 @@ module Api::V1
         return respond_with 404, key: 'user', message: 'User with the given username and password was not found'
       end
 
-      json = {}
-      json[:status] = 'OK'
-      json[:data] = serialize_encrypt_data(@user, :uuid, :email, :username, :first_name, :last_name, :token)
-      render json: json, status: :ok
+      render status: :ok
     end
 
     private
 
     def user_params
-      $params.permit(:email, :password, :first_name, :last_name, :username)
+      CurrentConnection.instance.params.permit(:email, :password, :first_name, :last_name, :username)
     end
   end
 end

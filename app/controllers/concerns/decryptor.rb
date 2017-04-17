@@ -2,16 +2,16 @@ module Decryptor
   include ActiveSupport::Concern
 
   def find_session_key
-    SessionKey.find_by(identifier: params[:identifier])
+    CurrentConnection.instance.session_key = SessionKey.find_by(identifier: params[:identifier])
   end
 
   def decrypt_params
     return params unless params[:data].present?
     data = params[:data]
 
-    if $encryption_enable
+    if Settings.instance.encryption_enable
       data = begin
-        res = Grasshopper.decrypt($session_key.shared_key, params[:data])
+        res = Encryption.decrypt(params[:data])
         return respond_with 415, key: 'shared_key', message: 'Not valid' unless valid_json?(res)
         res
       rescue
@@ -31,6 +31,6 @@ module Decryptor
       data[param] = model.send(param)
     end
 
-    $encryption_enable ? Grasshopper.encrypt($session_key.shared_key, data) : data
+    Settings.instance.encryption_enable ? Encryption.encrypt(data.to_json) : data
   end
 end

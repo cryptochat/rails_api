@@ -16,9 +16,7 @@ gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'redis', '~> 3.0'
 gem 'aescrypt'
 
 gem 'pg_query'
@@ -47,11 +45,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-end
-
-group :development, :gitlab_ci do
+  # deploy tools
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-bundler', '~> 1.2'
+  gem 'capistrano-db-tasks', '0.4', require: false
   gem 'capistrano-faster-assets', '~> 1.0'
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-rvm'

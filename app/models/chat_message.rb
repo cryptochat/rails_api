@@ -1,5 +1,6 @@
 class ChatMessage < ApplicationRecord
-  validates :user_id, presence: true, numericality: true
+  validates :user_id,         presence: true, numericality: true
+  validates :interlocutor_id, presence: true, numericality: true
   validates :chat_channel_id, presence: true, numericality: true
   validates :text, presence: true
 
@@ -10,7 +11,7 @@ class ChatMessage < ApplicationRecord
 
   def self.send_message(sender_id, recipient_id, message)
     chat_channel = ChatChannel.find_or_create(sender_id, recipient_id)
-    create(user_id: sender_id, text: message, chat_channel_id: chat_channel.id)
+    create(user_id: sender_id, interlocutor_id: recipient_id, text: message, chat_channel_id: chat_channel.id)
   end
 
   def self.history(current_user_id, interlocutor_id, offset = 0, limit = 20)
@@ -39,13 +40,36 @@ class ChatMessage < ApplicationRecord
     where(is_read: false, user_id: user_id).update_all(is_read: true, readed_at: Time.now.utc)
   end
 
+  # TODO: кэширование
+  def sender
+    User.find_by(id: user_id)
+  end
+
+  # TODO: кэширование
+  def recipient
+    User.find_by(id: interlocutor_id)
+  end
+
   def read?
     is_read
   end
 
   private
 
+  def render_incoming_message(obj, confirmation)
+    ApplicationController.render(template: 'api/v1/chat_messages/incoming_message',
+                                 locals: { message: obj, method_name: confirmation })
+  end
+
+  # TODO: move to sidekiq
   def broadcast_message
-    # code
+    message_for_sender = render_incoming_message(self, 'confirmation_message')
+    WsChatChannel.broadcast_to(sender, Encryption.encrypt(message_for_sender))
+    if recipient.online?
+      message_for_recipient = render_incoming_message(self, 'incoming_message')
+      WsChatChannel.broadcast_to(recipient, Encryption.encrypt(message_for_recipient))
+    else
+      # push notify
+    end
   end
 end
