@@ -6,12 +6,14 @@ class SessionKey < ApplicationRecord
   before_create :generate_identifier
   before_create :generate_keys
 
-  def self.exchange(identifier, base64_public_key)
-    session_key = SessionKey.find_by(identifier: identifier)
-    if session_key.present?
-      public_key = Base64.decode64(base64_public_key)
-      session_key.shared_key = RbNaCl::GroupElement.new(public_key).mult(session_key.private_key)
-      session_key.save
+  class << self
+    def exchange(identifier, base64_public_key)
+      session_key = SessionKey.find_by(identifier: identifier)
+      if session_key.present?
+        public_key = Base64.decode64(base64_public_key)
+        session_key.shared_key = RbNaCl::GroupElement.new(public_key).mult(session_key.private_key)
+        session_key.save
+      end
     end
   end
 

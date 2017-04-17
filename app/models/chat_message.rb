@@ -9,18 +9,19 @@ class ChatMessage < ApplicationRecord
 
   after_create :broadcast_message
 
-  def self.send_message(sender_id, recipient_id, message)
-    chat_channel = ChatChannel.find_or_create(sender_id, recipient_id)
-    create(user_id: sender_id, interlocutor_id: recipient_id, text: message, chat_channel_id: chat_channel.id)
-  end
+  class << self
+    def send_message(sender_id, recipient_id, message)
+      chat_channel = ChatChannel.find_or_create(sender_id, recipient_id)
+      create(user_id: sender_id, interlocutor_id: recipient_id, text: message, chat_channel_id: chat_channel.id)
+    end
 
-  def self.history(current_user_id, interlocutor_id, offset = 0, limit = 20)
-    chat_channel = ChatChannel.find_or_create(current_user_id, interlocutor_id)
-    where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
-  end
+    def history(current_user_id, interlocutor_id, offset = 0, limit = 20)
+      chat_channel = ChatChannel.find_or_create(current_user_id, interlocutor_id)
+      where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
+    end
 
-  def self.interlocutors(current_user_id)
-    sql = <<-SQL.squish
+    def interlocutors(current_user_id)
+      sql = <<-SQL.squish
       SELECT *
       FROM chat_channels cc
         JOIN
@@ -31,13 +32,14 @@ class ChatMessage < ApplicationRecord
         ) cm ON cm.chat_channel_id = cc.id
       WHERE cc.cache_user_ids @> ARRAY[:user_id]
       ORDER BY cm.created_at DESC;
-    SQL
+      SQL
 
-    find_by_sql [sql, user_id: current_user_id]
-  end
+      find_by_sql [sql, user_id: current_user_id]
+    end
 
-  def self.read_all!(user_id)
-    where(is_read: false, user_id: user_id).update_all(is_read: true, readed_at: Time.now.utc)
+    def read_all!(user_id)
+      where(is_read: false, user_id: user_id).update_all(is_read: true, readed_at: Time.now.utc)
+    end
   end
 
   # TODO: кэширование

@@ -3,14 +3,16 @@ class Token < ApplicationRecord
 
   before_save :token_generate
 
-  def self.generate_token(user)
-    tokens = user.tokens.order(updated_at: :desc)
-    if tokens.count >= 3
-      tokens.last.touch
-      tokens.last.save
-      tokens.last
-    else
-      create user_id: user.id
+  class << self
+    def generate_token(user)
+      tokens = user.tokens.order(updated_at: :desc)
+      if tokens.count >= 3
+        tokens.last.touch
+        tokens.last.save
+        tokens.last
+      else
+        create user_id: user.id
+      end
     end
   end
 

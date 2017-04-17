@@ -13,21 +13,23 @@ class User < ApplicationRecord
   before_save :encrypt_password, if: :password_changed?
   before_save :set_full_name
 
-  def self.paginate(offset = 0, limit = 20)
-    select(:id, :full_name).order(:full_name).offset(offset).limit(limit)
-  end
+  class << self
+    def paginate(offset = 0, limit = 20)
+      select(:id, :full_name).order(:full_name).offset(offset).limit(limit)
+    end
 
-  def self.search(query)
-    query = "%#{query.downcase}%"
-    select(:id, :full_name).where('full_name ILIKE ?', query)
-  end
+    def search(query)
+      query = "%#{query.downcase}%"
+      select(:id, :full_name).where('full_name ILIKE ?', query)
+    end
 
-  def self.auth(login, password)
-    sha512 = OpenSSL::Digest::SHA512.new
-    password = sha512.digest(password.to_s + ENV['SALT'])
-    user = where('username = :login or email = :login', login: login).where(password: password).take
-    Token.generate_token(user).value if user.present?
-    user
+    def auth(login, password)
+      sha512 = OpenSSL::Digest::SHA512.new
+      password = sha512.digest(password.to_s + ENV['SALT'])
+      user = where('username = :login or email = :login', login: login).where(password: password).take
+      Token.generate_token(user).value if user.present?
+      user
+    end
   end
 
   def token
