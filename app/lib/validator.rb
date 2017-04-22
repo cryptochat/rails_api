@@ -17,8 +17,12 @@ class Validator
     end
 
     def pub_key_valid_length?(base64_string)
-      string = Base64.urlsafe_decode64(base64_string)
-      string.bytesize == 32 ? true : false
+      begin
+        string = Base64.urlsafe_decode64(base64_string)
+        string.bytesize == 32 ? true : false
+      rescue
+        false
+      end
     end
   end
 end
