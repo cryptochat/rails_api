@@ -10,7 +10,7 @@ class SessionKey < ApplicationRecord
     def exchange(identifier, base64_public_key)
       session_key = SessionKey.find_by(identifier: identifier)
       if session_key.present?
-        public_key = Base64.decode64(base64_public_key)
+        public_key = Base64.urlsafe_decode64(base64_public_key)
         session_key.shared_key = RbNaCl::GroupElement.new(public_key).mult(session_key.private_key)
         session_key.save
       end
@@ -18,7 +18,7 @@ class SessionKey < ApplicationRecord
   end
 
   def base64_public_key
-    Base64.encode64(public_key)
+    Base64.urlsafe_encode64(public_key)
   end
 
   private
