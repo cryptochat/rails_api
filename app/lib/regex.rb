@@ -13,7 +13,7 @@ class Regex
     end
 
     def base64_urlsafe
-      %r{^(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-]{2}==|[A-Za-z0-9_-]{3}=|[A-Za-z0-9_-]{4})$}
+      %r{[a-zA-Z0-9_-]}
     end
   end
 end
