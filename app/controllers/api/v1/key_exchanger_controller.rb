@@ -22,5 +22,16 @@ module Api::V1
       return respond_with 404, key: 'identifier', message: 'Not found' unless session_key.present?
       respond_with 200
     end
+
+    # использовать только в dev режиме!
+    def verify_shared_key
+      return respond_with 400, key: 'session_key', message: 'Not present' unless params[:session_key].present?
+
+      @session_key_client = params[:session_key]
+      @session_key_server = SessionKey.find_by(identifier: params[:identifier])
+      return respond_with 404, key: 'identifier', message: 'Not found' unless @session_key_server.present?
+
+      render status: :ok
+    end
   end
 end

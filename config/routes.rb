@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :key_exchanger, only: [] do
         collection do
           get  :get_public
+          get  :verify_shared_key
           post :send_public
         end
       end
