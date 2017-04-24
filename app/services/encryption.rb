@@ -2,6 +2,7 @@ class Encryption
   class << self
     def encrypt(message)
       if Settings.instance.encryption_enable
+        message = message.is_a?(Hash) ? message.to_json : message
         key = CurrentConnection.instance.session_key.shared_key
         data = Cipher.encrypt(key, message)
         Base64.urlsafe_encode64(data)
