@@ -2,7 +2,8 @@ module JsonErrorSerializer
   module Extenders
     module Serialize
 
-      def self.error(err_code, key = nil, message = nil)
+      def self.error(err_code, key = nil, message = nil, encryption: true)
+        result = {}
         data = {}
         data[:status]  = err_code.to_s
 
@@ -13,12 +14,19 @@ module JsonErrorSerializer
           data[:message] = message.nil? ? Rack::Utils::HTTP_STATUS_CODES[err_code] : message
         end
 
-        data
+        if encryption
+          result[:cipher_message] = Encryption.encrypt(data)
+        else
+          result = data
+        end
+
+        result
       end
 
       def self.serialize(errors, options = {})
         return if errors.nil?
 
+        result = {}
         json = {}
         json[:errors] = {}
 
@@ -30,9 +38,9 @@ module JsonErrorSerializer
           json[options[:key]] = options[:value]
         end
 
-        json
+        result[:cipher_message] = Encryption.encrypt(json)
+        result
       end
-
     end
   end
 end

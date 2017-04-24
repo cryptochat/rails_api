@@ -15,19 +15,23 @@ class ApiController < ApplicationController
   private
 
   def per_request
-    return respond_with 400, key: 'identifier', message: 'Not present' unless params[:identifier].present?
+    return respond_with 400, key: 'identifier', message: 'Not present', encryption: false unless params[:identifier].present?
     find_session_key
 
     # если ключ идентификатора ключа шифрования не найден
     unless CurrentConnection.instance.session_key.present?
-      return respond_with 404, key: 'identifier', message: 'Not found'
+      return respond_with 404, key: 'identifier', message: 'Not found', encryption: false
     end
 
     # если процедура обмена ключами не завершена
     unless CurrentConnection.instance.session_key.shared_key.present?
-      return respond_with 404, key: 'identifier', message: 'Not have shared key'
+      return respond_with 404, key: 'identifier', message: 'Not have shared key', encryption: false
     end
 
     CurrentConnection.instance.params = decrypt_params
+  end
+
+  def auth_by_token
+    # code
   end
 end

@@ -1,13 +1,16 @@
 module Decryptor
   include ActiveSupport::Concern
 
+  ALLOW_PARAMETERS = %i[controller action identifier public_key shared_key data]
+
   def find_session_key
     CurrentConnection.instance.session_key = SessionKey.find_by(identifier: params[:identifier])
   end
 
   def decrypt_params
-    return params unless params[:data].present?
-    data = params[:data]
+    tmp = params.slice(*ALLOW_PARAMETERS)
+    return tmp unless tmp[:data].present?
+    data = tmp[:data]
 
     if Settings.instance.encryption_enable
       data = begin
@@ -21,16 +24,7 @@ module Decryptor
       return respond_with 406, key: 'data', message: 'json invalid' unless valid_json?(data)
     end
 
-    hash = params.except(:data)
+    hash = tmp.except(:data)
     hash.merge(JSON.parse(data))
-  end
-
-  def serialize_encrypt_data(model, *params)
-    data = {}
-    params.each do |param|
-      data[param] = model.send(param)
-    end
-
-    Settings.instance.encryption_enable ? Encryption.encrypt(data.to_json) : data
   end
 end

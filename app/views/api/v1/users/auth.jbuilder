@@ -1,2 +1,11 @@
-json.status 'OK'
-json.data serialize_encrypt_data(@user, :uuid, :email, :username, :first_name, :last_name, :token)
+json.encrypt! do
+  json.status 'OK'
+  json.user do
+    json.uuid @user.uuid
+    json.email @user.email
+    json.username @user.username
+    json.first_name @user.first_name
+    json.last_name @user.last_name
+    json.token @user.token
+  end
+end

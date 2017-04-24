@@ -1,14 +1,15 @@
 module Api::V1
   # Контроллер отвечающий за регистрацию/аунтификацию пользователей
   class UsersController < ApiController
+    def index
+      search_params[:query].present? ? User.all : User.search(search_params[:query])
+    end
+
     def create
       @user = User.new(user_params)
       @user.tokens.build
       if @user.save
-        json = {}
-        json[:status] = 'Created'
-        json[:data] = serialize_encrypt_data(@user, :uuid, :email, :username, :first_name, :last_name, :token)
-        render json: json, status: :created
+        render 'api/v1/users/auth', status: :created
       else
         serialize_errors(@user.errors)
       end
@@ -37,6 +38,10 @@ module Api::V1
 
     def user_params
       CurrentConnection.instance.params.permit(:email, :password, :first_name, :last_name, :username)
+    end
+
+    def search_params
+      CurrentConnection.instance.params.permit(:query)
     end
   end
 end

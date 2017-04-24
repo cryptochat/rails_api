@@ -14,10 +14,6 @@ class User < ApplicationRecord
   before_save :set_full_name
 
   class << self
-    def paginate(offset = 0, limit = 20)
-      select(:id, :full_name).order(:full_name).offset(offset).limit(limit)
-    end
-
     def search(query)
       query = "%#{query.downcase}%"
       select(:id, :full_name).where('full_name ILIKE ?', query)

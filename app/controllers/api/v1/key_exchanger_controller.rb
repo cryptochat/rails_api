@@ -19,8 +19,8 @@ module Api::V1
       return render json: { status: '400', errors: errors }, status: :bad_request if errors.present?
 
       session_key = SessionKey.exchange(params[:identifier], params[:public_key])
-      return respond_with 404, key: 'identifier', message: 'Not found' unless session_key.present?
-      respond_with 200
+      return respond_with 404, key: 'identifier', message: 'Not found', encryption: false unless session_key.present?
+      respond_with 200, encryption: false
     end
 
     # использовать только в dev режиме!
@@ -29,7 +29,7 @@ module Api::V1
 
       @session_key_client = params[:session_key]
       @session_key_server = SessionKey.find_by(identifier: params[:identifier])
-      return respond_with 404, key: 'identifier', message: 'Not found' unless @session_key_server.present?
+      return respond_with 404, key: 'identifier', message: 'Not found', encryption: false unless @session_key_server.present?
 
       render status: :ok
     end
