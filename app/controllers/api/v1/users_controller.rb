@@ -1,6 +1,8 @@
 module Api::V1
   # Контроллер отвечающий за регистрацию/аунтификацию пользователей
   class UsersController < ApiController
+    before_action :auth_by_token, except: %w(create auth)
+
     def index
       search_params[:query].present? ? User.all : User.search(search_params[:query])
     end
