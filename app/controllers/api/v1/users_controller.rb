@@ -4,7 +4,11 @@ module Api::V1
     before_action :auth_by_token, except: %w(create auth)
 
     def index
-      search_params[:query].present? ? User.all : User.search(search_params[:query])
+      @users = if search_params[:query].present?
+                 User.search(search_params[:query]).where.not(id: current_user.id)
+               else
+                 User.all.where.not(id: current_user.id)
+               end
     end
 
     def create

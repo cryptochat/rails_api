@@ -16,7 +16,7 @@ class User < ApplicationRecord
   class << self
     def search(query)
       query = "%#{query.downcase}%"
-      select(:id, :full_name).where('full_name ILIKE ?', query)
+      select('id, first_name, last_name, username, full_name').where('full_name ILIKE ?', query).order(:full_name)
     end
 
     def auth(login, password)

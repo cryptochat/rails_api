@@ -1,1 +1,7 @@
-json.status 'ok'
+json.encrypt! do
+  json.users do
+    json.array! @users do |user|
+      json.extract! user, :id, :username, :first_name, :last_name
+    end
+  end
+end

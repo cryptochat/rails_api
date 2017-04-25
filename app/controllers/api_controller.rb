@@ -32,11 +32,15 @@ class ApiController < ApplicationController
   end
 
   def auth_by_token
-    return respond_with 400, key: 'token', message: 'Not present' unless CurrentConnection.instance.params[:token]
+    return respond_with 403, key: 'token', message: 'Not present' unless CurrentConnection.instance.params[:token]
 
     token = Token.find_by(value: CurrentConnection.instance.params[:token])
-    return respond_with 404, key: 'token', message: 'Not found' unless token.present?
+    return respond_with 403, key: 'token', message: 'Not found' unless token.present?
 
     CurrentConnection.instance.user = token.user
+  end
+
+  def current_user
+    CurrentConnection.instance.user
   end
 end

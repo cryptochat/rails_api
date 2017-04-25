@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": ["cipher_message"],
+  "properties": {
+    "cipher_message": {
+      "type": "object",
+      "required": ["users"],
+      "users": {
+        "required": ["id", "username", "first_name", "last_name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
