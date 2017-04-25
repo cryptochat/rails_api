@@ -10,5 +10,11 @@ FactoryGirl.define do
     first_name
     last_name
     password '123456'
+
+    trait :with_token do
+      after(:create) do |user|
+        create_list(:token, 1, user: user)
+      end
+    end
   end
 end

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "required": ["cipher_message"],
+  "properties": {
+    "cipher_message": {
+      "type": "object",
+      "required": ["chats"],
+      "users": {
+        "required": ["interlocutor", "last_message"],
+        "properties": {
+          "last_message": {
+            "type": "string"
+          },
+          "interlocutor": {
+            "required": ["id", "username", "first_name", "last_name"],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "username": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

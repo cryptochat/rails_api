@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-
       resources :key_exchanger, only: [] do
         collection do
           get  :get_public
@@ -14,12 +13,17 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :users do
+      resources :users, only: %i[index create] do
         collection do
           post :auth
         end
       end
 
+      resources :chat_messages, only: %i[index] do
+        collection do
+          get :chat_list
+        end
+      end
     end
   end
 

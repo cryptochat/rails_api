@@ -6,6 +6,7 @@ class ChatMessage < ApplicationRecord
 
   belongs_to :chat_channel
   belongs_to :user
+  belongs_to :interlocutor, class_name: 'User', foreign_key: 'interlocutor_id'
 
   after_create :broadcast_message
 
