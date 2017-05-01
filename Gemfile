@@ -21,6 +21,7 @@ gem 'aescrypt'
 
 gem 'pg_query'
 gem 'pghero'
+gem 'faker'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
