@@ -2,8 +2,12 @@ json.encrypt! do
   json.chats do
     json.array! @chats do |chat|
       json.interlocutor do
-        obj = current_user.id == chat.user_id ? chat.interlocutor : chat.user
-        json.extract! obj, :id, :username, :first_name, :last_name
+        interlocutor = current_user.id == chat.user_id ? 'interlocutor' : 'user'
+        json.id         chat.send("#{interlocutor}_id")
+        json.username   chat.send("#{interlocutor}_username")
+        json.first_name chat.send("#{interlocutor}_first_name")
+        json.last_name  chat.send("#{interlocutor}_last_name")
+        json.is_online  chat.send("#{interlocutor}_is_online")
       end
       json.last_message chat.text
       json.is_read chat.read?

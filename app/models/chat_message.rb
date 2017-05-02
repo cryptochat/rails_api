@@ -23,16 +23,28 @@ class ChatMessage < ApplicationRecord
 
     def interlocutors(current_user_id)
       sql = <<-SQL.squish
-      SELECT *
-      FROM chat_channels cc
-        JOIN
-        (
-          SELECT DISTINCT ON (chat_channel_id) *
-          FROM chat_messages
-          ORDER BY chat_channel_id, created_at DESC
-        ) cm ON cm.chat_channel_id = cc.id
-      WHERE cc.cache_user_ids @> ARRAY[:user_id]
-      ORDER BY cm.created_at DESC;
+        SELECT cm.user_id, cm.interlocutor_id, cm.text, cm.is_read,
+          u1.id user_id,
+          u1.username user_username,
+          u1.first_name user_first_name,
+          u1.last_name user_last_name,
+          u1.is_online user_is_online,
+          u2.id interlocutor_id,
+          u2.username interlocutor_username,
+          u2.first_name interlocutor_first_name,
+          u2.last_name interlocutor_last_name,
+          u2.is_online interlocutor_is_online
+        FROM chat_channels cc
+          JOIN
+          (
+            SELECT DISTINCT ON (chat_channel_id) *
+            FROM chat_messages
+            ORDER BY chat_channel_id, created_at DESC
+          ) cm ON cm.chat_channel_id = cc.id
+          JOIN users u1 ON u1.id = cm.user_id
+          JOIN users u2 ON u2.id = cm.interlocutor_id
+        WHERE cc.cache_user_ids @> ARRAY[:user_id]
+        ORDER BY cm.created_at DESC;
       SQL
 
       find_by_sql [sql, user_id: current_user_id]
