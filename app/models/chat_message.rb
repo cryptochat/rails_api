@@ -17,23 +17,24 @@ class ChatMessage < ApplicationRecord
     end
 
     def history(current_user_id, interlocutor_id, offset = 0, limit = 20)
+      offset ||= 0
+      limit  ||= 20
+
       chat_channel = ChatChannel.find_or_create(current_user_id, interlocutor_id)
-      where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
+      includes(:user).where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
     end
 
     def interlocutors(current_user_id)
       sql = <<-SQL.squish
         SELECT cm.user_id, cm.interlocutor_id, cm.text, cm.is_read,
-          u1.id user_id,
-          u1.username user_username,
+          u1.username   user_username,
           u1.first_name user_first_name,
-          u1.last_name user_last_name,
-          u1.is_online user_is_online,
-          u2.id interlocutor_id,
-          u2.username interlocutor_username,
+          u1.last_name  user_last_name,
+          u1.is_online  user_is_online,
+          u2.username   interlocutor_username,
           u2.first_name interlocutor_first_name,
-          u2.last_name interlocutor_last_name,
-          u2.is_online interlocutor_is_online
+          u2.last_name  interlocutor_last_name,
+          u2.is_online  interlocutor_is_online
         FROM chat_channels cc
           JOIN
           (

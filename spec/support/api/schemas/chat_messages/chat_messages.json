@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": ["cipher_message"],
+  "properties": {
+    "cipher_message": {
+      "type": "object",
+      "required": ["messages"],
+      "messages": {
+        "required": ["user", "message"],
+        "properties": {
+          "user": {
+            "required": ["id", "username", "first_name", "last_name", "is_online"],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "username": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "required": ["text", "created_at"],
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
