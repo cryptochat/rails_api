@@ -9,5 +9,6 @@ json.body do
     json.first_name message.sender.first_name
     json.last_name  message.sender.last_name
     json.username   message.sender.username
+    json.avatar     message.sender.avatar
   end
 end

@@ -21,6 +21,15 @@ module Api::V1
       end
     end
 
+    def update
+      @user = current_user
+      if @user.update_attributes(update_params)
+        render status: :ok
+      else
+        serialize_errors(@user.errors)
+      end
+    end
+
     def auth
       unless user_params[:email].present? || user_params[:username].present?
         return respond_with 400, key: 'login', message: 'email or username not present'
@@ -44,6 +53,10 @@ module Api::V1
 
     def user_params
       CurrentConnection.instance.params.permit(:email, :password, :first_name, :last_name, :username)
+    end
+
+    def update_params
+      CurrentConnection.instance.params.permit(:password, :first_name, :last_name, :avatar)
     end
 
     def search_params

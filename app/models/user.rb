@@ -13,6 +13,8 @@ class User < ApplicationRecord
   before_save :encrypt_password, if: :password_changed?
   before_save :set_full_name
 
+  mount_base64_uploader :avatar, AvatarUploader
+
   class << self
     def search(query)
       query = "%#{query.downcase}%"

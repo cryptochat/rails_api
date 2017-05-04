@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index create] do
         collection do
           post :auth
+          put  :update
         end
       end
 

@@ -4,6 +4,8 @@ class ChatMessage < ApplicationRecord
   validates :chat_channel_id, presence: true, numericality: true
   validates :text, presence: true
 
+  MAX_LIMIT = 40
+
   belongs_to :chat_channel
   belongs_to :user
   belongs_to :interlocutor, class_name: 'User', foreign_key: 'interlocutor_id'
@@ -18,37 +20,30 @@ class ChatMessage < ApplicationRecord
 
     def history(current_user_id, interlocutor_id, offset = 0, limit = 20)
       offset ||= 0
-      limit  ||= 20
+      limit = if limit.present?
+                limit >= MAX_LIMIT ? MAX_LIMIT : limit
+              else
+                20
+              end
 
       chat_channel = ChatChannel.find_or_create(current_user_id, interlocutor_id)
       includes(:user).where(chat_channel_id: chat_channel.id).offset(offset).limit(limit).order(created_at: :desc)
     end
 
     def interlocutors(current_user_id)
-      sql = <<-SQL.squish
-        SELECT cm.user_id, cm.interlocutor_id, cm.text, cm.is_read,
-          u1.username   user_username,
-          u1.first_name user_first_name,
-          u1.last_name  user_last_name,
-          u1.is_online  user_is_online,
-          u2.username   interlocutor_username,
-          u2.first_name interlocutor_first_name,
-          u2.last_name  interlocutor_last_name,
-          u2.is_online  interlocutor_is_online
-        FROM chat_channels cc
-          JOIN
-          (
-            SELECT DISTINCT ON (chat_channel_id) *
-            FROM chat_messages
-            ORDER BY chat_channel_id, created_at DESC
-          ) cm ON cm.chat_channel_id = cc.id
-          JOIN users u1 ON u1.id = cm.user_id
-          JOIN users u2 ON u2.id = cm.interlocutor_id
-        WHERE cc.cache_user_ids @> ARRAY[:user_id]
-        ORDER BY cm.created_at DESC;
+      subquery = <<-SQL
+        LEFT JOIN (
+          SELECT DISTINCT ON (chat_channel_id) *
+          FROM chat_messages ORDER BY chat_channel_id, created_at DESC 
+        ) AS cm ON cm.chat_channel_id = chat_channels.id
       SQL
 
-      find_by_sql [sql, user_id: current_user_id]
+      select('*')
+          .from('chat_channels')
+          .includes(:user, :interlocutor)
+          .joins(subquery)
+          .where('chat_channels.cache_user_ids @> ARRAY[?]', current_user_id)
+          .order('cm.created_at DESC')
     end
 
     def read_all!(user_id)

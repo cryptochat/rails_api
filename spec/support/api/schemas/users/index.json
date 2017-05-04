@@ -6,7 +6,7 @@
       "type": "object",
       "required": ["users"],
       "users": {
-        "required": ["id", "username", "first_name", "last_name"],
+        "required": ["id", "username", "first_name", "last_name", "avatar"],
         "properties": {
           "id": {
             "type": "string",
@@ -20,6 +20,9 @@
           },
           "last_name": {
             "type": "string"
+          },
+          "avatar": {
+            "type": "object"
           }
         }
       }

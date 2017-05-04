@@ -23,6 +23,11 @@ gem 'pg_query'
 gem 'pghero'
 gem 'faker'
 
+gem 'carrierwave', '~> 1.0'
+gem 'carrierwave-base64'
+gem 'carrierwave-imageoptimizer'
+gem 'mini_magick'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

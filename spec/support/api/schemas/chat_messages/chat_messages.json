@@ -9,7 +9,7 @@
         "required": ["user", "message"],
         "properties": {
           "user": {
-            "required": ["id", "username", "first_name", "last_name", "is_online"],
+            "required": ["id", "username", "first_name", "last_name", "is_online", "avatar"],
             "properties": {
               "id": {
                 "type": "integer"
@@ -22,6 +22,9 @@
               },
               "last_name": {
                 "type": "string"
+              },
+              "avatar": {
+                "type": "object"
               }
             }
           },
