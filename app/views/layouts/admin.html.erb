@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Администативная панель</title>
+    <%= stylesheet_link_tag 'admin/application' %>
+  </head>
+  <body>
+    <div id="wrapper">
+      <%= render 'admin/nav/assembled' %>
+      <div id="page-wrapper">
+        <% if flash.present? %>
+            <% flash.each do |name, msg| %>
+                <% klass = name == 'alert' ? 'alert-danger' : 'alert-success' %>
+                <%= content_tag :div, class: "alert #{klass} alert-fix" do %>
+                    <%= msg %>
+                <% end %>
+            <% end %>
+        <% end  %>
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= javascript_include_tag 'admin/application' %>
+  </body>
+</html>

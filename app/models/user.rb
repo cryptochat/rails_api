@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Concerns::Users::Decorators
+
   validates :uuid,       uniqueness: true
   validates :email,      presence: true, uniqueness: true, email: true
   validates :username,   presence: true, uniqueness: true
@@ -52,6 +54,14 @@ class User < ApplicationRecord
 
   def online?
     is_online
+  end
+
+  def block!
+    update_column(:is_active, false)
+  end
+
+  def unblock!
+    update_column(:is_active, true)
   end
 
   private

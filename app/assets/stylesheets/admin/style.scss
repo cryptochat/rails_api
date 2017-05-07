@@ -1,0 +1,16 @@
+.btn-slim {
+  padding: 3px;
+}
+
+.alert-fix {
+  position: relative;
+  top: 10px;
+  margin: 0;
+}
+
+.panel-errors {
+  .alert {
+    margin: 0;
+    color: red;
+  }
+}

@@ -1,0 +1,9 @@
+//= require jquery3
+//= require jquery_ujs
+//= require admin/vendor/bootstrap.min
+//= require admin/vendor/metisMenu
+//= require admin/vendor/jquery.dataTables.min
+//= require admin/vendor/dataTables.bootstrap.min
+//= require admin/vendor/dataTables.responsive.js
+//= require admin/vendor/sb-admin-2
+//= require admin/users/datatables

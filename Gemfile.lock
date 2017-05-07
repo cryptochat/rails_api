@@ -49,8 +49,12 @@ GEM
     aescrypt (1.0.0)
     airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
+    ajax-datatables-rails (0.3.1)
+      railties (>= 3.1)
     arel (7.1.4)
     ast (2.3.0)
+    bcrypt (3.1.11)
+    bootstrap_form (2.5.3)
     builder (3.2.3)
     byebug (9.0.6)
     capistrano (3.8.0)
@@ -90,6 +94,12 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     database_cleaner (1.5.3)
+    devise (4.2.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.1)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -101,6 +111,8 @@ GEM
     faker (1.7.3)
       i18n (~> 0.5)
     ffi (1.9.18)
+    font-awesome-rails (4.7.0.1)
+      railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.8.1)
@@ -138,6 +150,7 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    orm_adapter (0.5.0)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -184,6 +197,8 @@ GEM
     rbnacl-libsodium (1.0.11)
       rbnacl (>= 3.0.1)
     redis (3.3.3)
+    responders (2.3.0)
+      railties (>= 4.2.0, < 5.1)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -241,6 +256,8 @@ GEM
     uglifier (3.1.8)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.3)
+    warden (1.2.7)
+      rack (>= 1.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -250,6 +267,8 @@ PLATFORMS
 
 DEPENDENCIES
   aescrypt
+  ajax-datatables-rails
+  bootstrap_form
   byebug
   capistrano (~> 3.6)
   capistrano-bundler (~> 1.2)
@@ -262,8 +281,10 @@ DEPENDENCIES
   carrierwave-imageoptimizer
   coffee-rails (~> 4.2)
   database_cleaner
+  devise
   factory_girl_rails
   faker
+  font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
   json-schema

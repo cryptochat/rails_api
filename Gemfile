@@ -28,6 +28,12 @@ gem 'carrierwave-base64'
 gem 'carrierwave-imageoptimizer'
 gem 'mini_magick'
 
+gem 'font-awesome-rails'
+
+gem 'ajax-datatables-rails'
+gem 'bootstrap_form'
+gem 'devise'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

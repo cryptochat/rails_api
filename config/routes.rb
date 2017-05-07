@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
 
+  devise_for :admins
   mount PgHero::Engine, at: :pghero
   mount ActionCable.server => '/cable'
+
+  namespace :admin do
+    root 'users#index'
+    resources :users, except: %i(show)
+    resources :admins, except: %i(show)
+  end
 
   namespace :api do
     namespace :v1 do
@@ -27,5 +34,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
 end

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Администативная панель</title>
+  <%= stylesheet_link_tag 'admin/application' %>
+</head>
+<body>
+<div id="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+          <div class="panel-errors">
+            <% if alert %>
+                <p class="alert"><%= alert %></p>
+            <% elsif notice %>
+                <p class="notice"><%= notice %></p>
+            <% end %>
+          </div>
+
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
