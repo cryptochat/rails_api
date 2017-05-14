@@ -34,6 +34,8 @@ gem 'ajax-datatables-rails'
 gem 'bootstrap_form'
 gem 'devise'
 
+gem 'rpush'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -64,6 +66,7 @@ group :development do
   gem 'capistrano-faster-assets', '~> 1.0'
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-rvm'
+  gem 'capistrano-rpush'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         collection do
           post :auth
           put  :update
+          post :device_token
         end
       end
 

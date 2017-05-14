@@ -92,4 +92,104 @@ describe Api::V1::UsersController, type: :controller do
       expect(response).to match_response_schema('users/index')
     end
   end
+
+  context 'device tokens' do
+    it '-- successful request' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:token] = user.token
+      data[:value] = 'example'
+      data[:type]  = 'google'
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 200
+    end
+
+    it '-- without token' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:value] = 'example'
+      data[:type]  = 'google'
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 403
+    end
+
+    it '-- without value' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:token] = user.token
+      data[:type]  = 'google'
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 400
+    end
+
+    it '-- without type' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:token] = user.token
+      data[:value]  = 'example'
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 400
+    end
+
+    it '-- without type & token' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:token] = user.token
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 400
+    end
+
+
+    it '-- with not valid type' do
+      user = FactoryGirl.create(:user, :with_token)
+      session_key = FactoryGirl.create(:session_key)
+
+      data = {}
+      data[:token] = user.token
+      data[:value] = 'example'
+      data[:type]  = 'not valid'
+
+      process :device_token, method: :post, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 400
+    end
+  end
 end

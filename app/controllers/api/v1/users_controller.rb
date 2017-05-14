@@ -1,6 +1,8 @@
 module Api::V1
   # Контроллер отвечающий за регистрацию/аунтификацию пользователей
   class UsersController < ApiController
+    ALLOWED_DEVICE_TYPES = %w(apple google)
+
     before_action :auth_by_token, except: %w(create auth)
 
     def index
@@ -49,6 +51,15 @@ module Api::V1
       render status: :ok
     end
 
+    def device_token
+      return respond_with 400, key: 'value', message: 'value not present' unless device_token_params[:value].present?
+      return respond_with 400, key: 'type', message: 'type not present' unless device_token_params[:type].present?
+      return respond_with 400, key: 'type', message: 'not allowed' unless ALLOWED_DEVICE_TYPES.include?(device_token_params[:type])
+
+      DeviceToken.build_token(current_user.id, device_token_params[:value], device_token_params[:type])
+      respond_with 200
+    end
+
     private
 
     def user_params
@@ -61,6 +72,10 @@ module Api::V1
 
     def search_params
       CurrentConnection.instance.params.permit(:query)
+    end
+
+    def device_token_params
+      CurrentConnection.instance.params.permit(:value, :type)
     end
   end
 end
