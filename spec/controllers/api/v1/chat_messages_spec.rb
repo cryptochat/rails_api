@@ -155,5 +155,25 @@ describe Api::V1::ChatMessagesController, type: :controller do
       expect(response).to match_response_schema('chat_messages/chat_messages')
       expect(msg_2).to eq msg_1
     end
+
+    it '-- valid convert string -> integer' do
+      user1 = FactoryGirl.create(:user, :with_token)
+      user2 = FactoryGirl.create(:user)
+
+      data = {}
+      data[:token] = user1.token
+      data[:limit] = '1'
+      data[:offset] = '1'
+      data[:interlocutor_id] = user2.id.to_s
+
+      session_key = FactoryGirl.create(:session_key)
+      process :index, method: :get, params: {
+          identifier: session_key.identifier,
+          data: data.to_json
+      }
+
+      expect(response.status).to eq 200
+      expect(response).to match_response_schema('chat_messages/chat_messages')
+    end
   end
 end

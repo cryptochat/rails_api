@@ -5,7 +5,7 @@ class ChatChannel < ApplicationRecord
 
   class << self
     def find_or_create(user_1_id, user_2_id)
-      ids = [user_1_id, user_2_id].sort
+      ids = [user_1_id.to_i, user_2_id.to_i].sort
 
       @chat_channel = read_data_from_cache(direct_channel_name(ids))
       @chat_channel ||= find_and_write_cache(ids)
