@@ -21,7 +21,7 @@ class ChatMessage < ApplicationRecord
     def history(current_user_id, interlocutor_id, offset = 0, limit = 20)
       offset ||= 0
       limit = if limit.present?
-                limit >= MAX_LIMIT ? MAX_LIMIT : limit
+                limit.to_i >= MAX_LIMIT ? MAX_LIMIT : limit
               else
                 20
               end
