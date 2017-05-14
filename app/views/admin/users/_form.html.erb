@@ -1,14 +1,15 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">Редактирование пользователя</h1>
+    <h1 class="page-header"><%= @user.id ? 'Редактирование пользователя' : 'Создание пользователя' %></h1>
   </div>
 </div>
 
 <%= bootstrap_form_for @user, url: { action: @user.id ? 'update' : 'create' } do |f| %>
-    <%= f.email_field :email, label: 'Почта' %>
     <%= f.text_field :first_name, label: 'Имя' %>
     <%= f.text_field :last_name, label: 'Фамилия' %>
     <%= f.text_field :username, label: 'Никнейм' %>
+    <%= f.email_field :email, label: 'Почта' %>
+    <%= f.password_field :password, label: 'Пароль' %>
     <%= f.check_box :is_active, label: 'Доступ' %>
     <%= f.submit @user.id ? 'Обновить' : 'Создать', class: 'btn btn-success' %>
 <% end %>

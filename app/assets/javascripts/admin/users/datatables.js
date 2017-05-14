@@ -4,6 +4,7 @@ jQuery(document).ready(function() {
         "processing": true,
         "serverSide": true,
         "ajax": table.data('source'),
-        "pagingType": "full_numbers"
+        "pagingType": "full_numbers",
+        "order": [[0, 'desc']]
     });
 });
