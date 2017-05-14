@@ -6,10 +6,19 @@
       "type": "object",
       "required": ["chats"],
       "users": {
-        "required": ["interlocutor", "last_message"],
+        "required": ["interlocutor", "last_message", "is_read", "from_me", "created_at"],
         "properties": {
           "last_message": {
             "type": "string"
+          },
+          "is_read": {
+            "type": "boolean"
+          },
+          "from_me": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "integer"
           },
           "interlocutor": {
             "required": ["id", "username", "first_name", "last_name", "avatar"],

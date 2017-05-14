@@ -13,6 +13,7 @@ json.encrypt! do
       json.last_message chat.text
       json.is_read chat.read?
       json.from_me current_user.id == chat.user_id
+      json.created_at chat.created_at.to_i
     end
   end
 end
