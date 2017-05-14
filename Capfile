@@ -7,6 +7,7 @@ require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/faster_assets'
+require 'capistrano/rpush'
 # require 'capistrano/passenger'
 
 
