@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :last_name,  presence: true, length: { minimum: 2 }
 
   has_many :tokens
+  has_many :device_tokens
   has_and_belongs_to_many :chat_channels
 
   before_create :generate_uuid

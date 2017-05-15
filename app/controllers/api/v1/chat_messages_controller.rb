@@ -11,6 +11,8 @@ module Api::V1
                                            chat_message_params[:interlocutor_id],
                                            chat_message_params[:offset],
                                            chat_message_params[:limit])
+
+      render locals: { current_user: current_user }
     end
 
     def chat_list

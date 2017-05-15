@@ -12,6 +12,7 @@ json.encrypt! do
       json.message do
         json.text msg.text
         json.created_at msg.created_at.to_i
+        json.from_me current_user.id ==  msg.user_id
       end
     end
   end
